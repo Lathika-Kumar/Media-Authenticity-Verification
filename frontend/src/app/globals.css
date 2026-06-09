@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/* ─── Google Font Variables ─────────────────────────────────────── */
+:root {
+  --background: #020617;
+  --foreground: #f8fafc;
+
+  /* Brand palette */
+  --cyan-glow:    rgba(6,  182, 212, 0.35);
+  --emerald-glow: rgba(16, 185, 129, 0.3);
+  --rose-glow:    rgba(244, 63,  94,  0.3);
+  --amber-glow:   rgba(245, 158, 11,  0.3);
+  --grid-line:    rgba(148, 163, 184, 0.04);
+
+  /* Spacing scale */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+  --space-2xl: 3rem;
+
+  /* Border radius */
+  --radius-sm:  0.5rem;
+  --radius-md:  0.75rem;
+  --radius-lg:  1rem;
+  --radius-xl:  1.5rem;
+
+  /* Shadows */
+  --shadow-card:   0 4px 24px rgba(0,0,0,0.4), 0 1px 4px rgba(0,0,0,0.3);
+  --shadow-glow-cyan:    0 0 20px rgba(6,182,212,0.15), 0 0 1px rgba(6,182,212,0.4);
+  --shadow-glow-rose:    0 0 20px rgba(244,63,94,0.15),  0 0 1px rgba(244,63,94,0.4);
+  --shadow-glow-emerald: 0 0 20px rgba(16,185,129,0.15), 0 0 1px rgba(16,185,129,0.4);
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent horizontal scroll at the root */
+  overflow-x: hidden;
+  /* Force consistent font rendering */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  /* Sharp text rendering on all platforms */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+  max-width: 100vw;
+  /* Proper line height base */
+  line-height: 1.5;
+  /* Word wrap protection */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Ensure images don't overflow */
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Tailwind theme tokens ──────────────────────────────────────── */
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono, 'JetBrains Mono'), 'Cascadia Code', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-slate-850: #0f172a;
+  --color-slate-750: #1e293b;
+  --color-slate-650: #334155;
+  --color-slate-350: #94a3b8;
+  --color-rose-450:  #fb7185;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+/* ─── Fluid Typography ───────────────────────────────────────────── */
+/* Prevents text from being too big on desktop or too small on mobile */
+.text-fluid-xs   { font-size: clamp(0.65rem,  1.2vw, 0.75rem); }
+.text-fluid-sm   { font-size: clamp(0.75rem,  1.5vw, 0.875rem); }
+.text-fluid-base { font-size: clamp(0.875rem, 2vw,   1rem); }
+.text-fluid-lg   { font-size: clamp(1rem,     2.5vw, 1.125rem); }
+.text-fluid-xl   { font-size: clamp(1.125rem, 3vw,   1.25rem); }
+.text-fluid-2xl  { font-size: clamp(1.25rem,  4vw,   1.5rem); }
+.text-fluid-3xl  { font-size: clamp(1.5rem,   5vw,   1.875rem); }
+.text-fluid-4xl  { font-size: clamp(1.875rem, 6vw,   2.25rem); }
+.text-fluid-hero { font-size: clamp(2.5rem,   8vw,   4.5rem); }
+
+/* ─── Keyframes ──────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInFast {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.03); }
+}
+
+@keyframes scanLine {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes rotateDash {
+  to { stroke-dashoffset: -200; }
+}
+
+@keyframes gridShimmer {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--cyan-glow); }
+  50%       { box-shadow: 0 0 28px var(--cyan-glow), 0 0 50px rgba(6,182,212,0.15); }
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+@keyframes cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes progressShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes barFill {
+  from { width: 0%; }
+  to   { width: var(--bar-w); }
+}
+
+@keyframes ringRotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Utility animation classes ──────────────────────────────────── */
+.animate-fade-in      { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-fade-in-fast { animation: fadeInFast 0.3s ease forwards; }
+.animate-fade-in-d    { animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+.animate-slide-in-up  { animation: slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.animate-pulse-slow   { animation: pulseSlow 3s ease-in-out infinite; }
+.animate-glow-pulse   { animation: glowPulse 2s ease-in-out infinite; }
+.animate-status-blink { animation: statusBlink 1.4s ease-in-out infinite; }
+.animate-float        { animation: float 4s ease-in-out infinite; }
+.animate-count-up     { animation: countUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+
+/* ─── Background grid ────────────────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ─── Scan line overlay ──────────────────────────────────────────── */
+.scan-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.scan-overlay::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,0.2), transparent);
+  animation: scanLine 10s linear infinite;
+}
+
+/* ─── Glassmorphism card ─────────────────────────────────────────── */
+.glass-card {
+  background: rgba(8, 13, 28, 0.68);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(6, 182, 212, 0.28);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.95), 0 0 24px rgba(6, 182, 212, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ─── Section card ───────────────────────────────────────────────── */
+.section-card {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: var(--radius-xl);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+@media (min-width: 640px) {
+  .section-card { padding: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .section-card { padding: 2rem; }
+}
+
+/* ─── Container ──────────────────────────────────────────────────── */
+.container-app {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-app { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .container-app { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* ─── Neon border glow ───────────────────────────────────────────── */
+.border-glow-cyan    { box-shadow: 0 0 0 1px rgba(6,182,212,0.3),  0 0 20px rgba(6,182,212,0.1); }
+.border-glow-rose    { box-shadow: 0 0 0 1px rgba(244,63,94,0.3),   0 0 20px rgba(244,63,94,0.1); }
+.border-glow-emerald { box-shadow: 0 0 0 1px rgba(16,185,129,0.3),  0 0 20px rgba(16,185,129,0.1); }
+.border-glow-amber   { box-shadow: 0 0 0 1px rgba(245,158,11,0.3),  0 0 20px rgba(245,158,11,0.1); }
+
+/* ─── Progress bar shimmer ───────────────────────────────────────── */
+.progress-shimmer {
+  background: linear-gradient(
+    90deg,
+    currentColor 0%,
+    rgba(255,255,255,0.4) 50%,
+    currentColor 100%
+  );
+  background-size: 200% auto;
+  animation: progressShimmer 2s linear infinite;
+}
+
+/* ─── Mono font helper ───────────────────────────────────────────── */
+.font-mono-custom { font-family: var(--font-mono); }
+
+/* ─── Text helpers ───────────────────────────────────────────────── */
+.text-balance    { text-wrap: balance; }
+.break-anywhere  { overflow-wrap: anywhere; word-break: break-word; }
+.truncate-safe   { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* ─── Risk alert variants ────────────────────────────────────────── */
+.risk-authentic {
+  background: linear-gradient(135deg, rgba(6,46,33,0.8), rgba(4,120,87,0.15));
+  border-color: rgba(16,185,129,0.35) !important;
+  box-shadow: 0 0 40px rgba(16,185,129,0.08), inset 0 1px 0 rgba(52,211,153,0.08);
+}
+.risk-moderate {
+  background: linear-gradient(135deg, rgba(69,26,3,0.8), rgba(180,83,9,0.15));
+  border-color: rgba(245,158,11,0.35) !important;
+  box-shadow: 0 0 40px rgba(245,158,11,0.08), inset 0 1px 0 rgba(251,191,36,0.08);
+}
+.risk-critical {
+  background: linear-gradient(135deg, rgba(76,5,25,0.8), rgba(190,18,60,0.15));
+  border-color: rgba(244,63,94,0.35) !important;
+  box-shadow: 0 0 40px rgba(244,63,94,0.08), inset 0 1px 0 rgba(251,113,133,0.08);
+}
+
+/* ─── Responsive table / overflow ───────────────────────────────── */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Min touch target (WCAG 2.5.5) ─────────────────────────────── */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
